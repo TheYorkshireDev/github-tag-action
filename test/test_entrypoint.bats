@@ -20,10 +20,11 @@ run_entry() {
   bash "$BATS_TEST_DIRNAME/../entrypoint.sh"
 }
 
-@test "Fails gracefully when no tags exist" {
+@test "Creates a new tag with default settings" {
+  export INPUT_DRY_RUN="true"
   run run_entry
-  assert_failure
-  assert_line "No existing tag found"
+  assert_success
+  assert_line "Created tag v0.0.1"
 }
 
 @test "Creates new tag when default bump 'patch'" {
