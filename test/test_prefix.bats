@@ -32,6 +32,9 @@ run_entry() {
 @test "Bumps a tag with default settings (no prefix)" {
   run setup
   git tag "1.0.0"
+  pwd
+  ls -al
+  git status
   export DRY_RUN="true"
   run run_entry
   assert_success
