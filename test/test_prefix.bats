@@ -4,6 +4,13 @@ bats_load_library bats-support
 bats_load_library bats-assert
 
 setup() {
+  # get the containing directory of this file
+  # use $BATS_TEST_FILENAME instead of ${BASH_SOURCE[0]} or $0,
+  # as those will point to the bats executable's location or the preprocessed file respectively
+  DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )"
+  # make executables in src/ visible to PATH
+  PATH="$DIR/../src:$PATH"
+
   TMP=$(mktemp -d)
   cd "$TMP"
   git init -b main >/dev/null
@@ -16,49 +23,21 @@ teardown() {
   rm -rf "$TMP"
 }
 
-run_entry() {
-  bash "$BATS_TEST_DIRNAME/../entrypoint.sh"
-}
-
 @test "Creates a new tag with default settings (no prefix)" {
+  # Arrange
   run setup
   export DRY_RUN="true"
-  run run_entry
+  pwd
+  git status
+  ls -al
+
+  # Act
+  entrypoint.sh
+
+  # Assert
   assert_success
   assert_line "Bumping tag 0.0.0 - New tag 0.1.0"
   run teardown
 }
 
-@test "Bumps a tag with default settings (no prefix)" {
-  run setup
-  git tag "1.0.0"
-  pwd
-  ls -al
-  git status
-  export DRY_RUN="true"
-  run run_entry
-  assert_success
-  assert_line "Bumping tag 1.0.0 - New tag 1.1.0"
-  run teardown
-}
 
-@test "Creates a new tag with 'v' prefix" {
-  run setup
-  export DRY_RUN="true"
-  export TAG_PREFIX="v"
-  run run_entry
-  assert_success
-  assert_line "Bumping tag v0.0.0 - New tag v0.1.0"
-  run teardown
-}
-
-@test "Bumps a new tag with 'v' prefix" {
-  run setup
-  git tag "v1.0.0"
-  export DRY_RUN="true"
-  export TAG_PREFIX="v"
-  run run_entry
-  assert_success
-  assert_line "Bumping tag v1.0.0 - New tag v1.1.0"
-  run teardown
-}
