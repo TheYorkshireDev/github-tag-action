@@ -1,6 +1,7 @@
 #!/usr/bin/env bats
-load 'bats-support/load.bash'
-load 'bats-assert/load.bash'
+export BATS_LIB_PATH=${BATS_LIB_PATH:-"/usr/lib"}
+bats_load_library bats-support
+bats_load_library bats-assert
 
 setup() {
   TMP=$(mktemp -d)
