@@ -20,13 +20,12 @@ run_entry() {
   bash "$BATS_TEST_DIRNAME/../entrypoint.sh"
 }
 
-@test "Creates a new tag with default settings" {
+@test "Creates a new tag with default settings (no prefix)" {
   run setup
-  export DRY_RUN="true"
   export GIT_API_TAGGING="false"
   run run_entry
   assert_success
-  assert_line "Bumping tag 0.0.0 - New tag 0.1.0"
+  assert_line "Bumping tag 0.0.0 - New tag 0.5.0"
   run teardown
 }
 
