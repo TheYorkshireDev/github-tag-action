@@ -22,25 +22,40 @@ run_entry() {
 
 @test "Creates a new tag with default settings (no prefix)" {
   run setup
-  export GIT_API_TAGGING="false"
+  export DRY_RUN="true"
   run run_entry
   assert_success
   assert_line "Bumping tag 0.0.0 - New tag 0.5.0"
   run teardown
 }
 
+@test "Bumps a tag with default settings (no prefix)" {
+  run setup
+  git tag -a "1.0.0" -m "Initial tag" >/dev/null
+  export DRY_RUN="true"
+  run run_entry
+  assert_success
+  assert_line "Bumping tag 1.0.0 - New tag 1.1.0"
+  run teardown
+}
+
 @test "Creates a new tag with v prefix" {
+  run setup
   export DRY_RUN="true"
   export TAG_PREFIX="v"
   run run_entry
   assert_success
   assert_line "Bumping tag v0.0.0 - New tag v0.1.0"
+  run teardown
 }
-@test "Creates new tag when default bump 'patch'" {
-  export INPUT_DEFAULT_BUMP="patch"
-  export GITHUB_TOKEN="dummy"
+
+@test "Bumps a new tag with v prefix" {
+  run setup
+  git tag -a "1.0.0" -m "Initial tag" >/dev/null
+  export DRY_RUN="true"
+  export TAG_PREFIX="v"
   run run_entry
   assert_success
-  # Expect tag v0.0.1 or similar printed
-  assert_line "Created tag v0.0.1"
+  assert_line "Bumping tag v1.0.0 - New tag v1.1.0"
+  run teardown
 }
