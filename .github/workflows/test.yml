@@ -213,8 +213,10 @@ jobs:
 
       - name: Setup Bats
         uses: bats-core/bats-action@3.0.1
+        with:
+          support-path: "${{ github.workspace }}/tests/bats-support"
+          assert-path: "${{ github.workspace }}/tests/bats-assert"
 
       - name: Run tests
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
         run: bats test/test_entrypoint.bats
