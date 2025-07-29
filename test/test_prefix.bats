@@ -26,14 +26,14 @@ teardown() {
 @test "Creates a new tag with default settings (no prefix)" {
   # Arrange
   run setup
-  export SOURCE="../../../../..$(pwd)"
+  export SOURCE="../../../../..$(pwd)" # Workaround for "GITHUB_WORKSPACE" prefix in script
   export DRY_RUN="true"
   pwd
   git status
   ls -al
 
   # Act
-  entrypoint.sh
+  bash entrypoint.sh
 
   # Assert
   assert_success
