@@ -35,4 +35,16 @@ run_entry() {
   assert_line "Bumping tag 0.0.0 - New tag 0.1.0"
 }
 
+@test "Bumps a tag with default settings (no prefix)" {
+  # Arrange
+  export SOURCE="$SOURCE"
+  export DRY_RUN="true"
+  git tag "1.0.0"
 
+  # Act
+  run run_entry
+
+  # Assert
+  assert_success
+  assert_line "Bumping tag 1.0.0 - New tag 1.1.0"
+}

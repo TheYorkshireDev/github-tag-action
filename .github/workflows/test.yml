@@ -220,6 +220,7 @@ jobs:
         with:
           support-path: "${{ github.workspace }}/tests/bats-support"
           assert-path: "${{ github.workspace }}/tests/bats-assert"
+          detik-install: false
 
       - name: Run tests
         shell: bash
