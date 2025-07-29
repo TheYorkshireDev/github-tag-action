@@ -77,3 +77,17 @@ run_entry() {
   assert_success
   assert_line "Bumping tag v1.0.0 - New tag v1.1.0"
 }
+
+@test "Creates a new tag with '/' prefix" {
+  # Arrange
+  export SOURCE="$SOURCE"
+  export DRY_RUN="true"
+  export TAG_PREFIX="infra/"
+
+  # Act
+  run run_entry
+
+  # Assert
+  assert_success
+  assert_line "Bumping tag infra/0.0.0 - New tag infra/0.1.0"
+}
