@@ -21,18 +21,21 @@ run_entry() {
 }
 
 @test "Creates a new tag with default settings" {
+  run setup
   export DRY_RUN="true"
+  export GIT_API_TAGGING="false"
   run run_entry
   assert_success
-  assert_line "Created tag v0.0.1"
+  assert_line "Bumping tag 0.0.0 - New tag 0.1.0"
+  run teardown
 }
 
-@test "Creates a new tag with no-prefix" {
+@test "Creates a new tag with v prefix" {
   export DRY_RUN="true"
-  export TAG_PREFIX=""
+  export TAG_PREFIX="v"
   run run_entry
   assert_success
-  assert_line "Created tag 0.0.1"
+  assert_line "Bumping tag v0.0.0 - New tag v0.1.0"
 }
 @test "Creates new tag when default bump 'patch'" {
   export INPUT_DEFAULT_BUMP="patch"
