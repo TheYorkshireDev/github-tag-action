@@ -211,6 +211,9 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: '0'
 
+      - name: Install Dependencies
+        run: npm install -g semver
+
       - name: Setup Bats
         id: setup-bats
         uses: bats-core/bats-action@3.0.1
