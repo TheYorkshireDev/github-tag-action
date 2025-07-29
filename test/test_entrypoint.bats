@@ -21,12 +21,19 @@ run_entry() {
 }
 
 @test "Creates a new tag with default settings" {
-  export INPUT_DRY_RUN="true"
+  export DRY_RUN="true"
   run run_entry
   assert_success
   assert_line "Created tag v0.0.1"
 }
 
+@test "Creates a new tag with no-prefix" {
+  export DRY_RUN="true"
+  export TAG_PREFIX=""
+  run run_entry
+  assert_success
+  assert_line "Created tag 0.0.1"
+}
 @test "Creates new tag when default bump 'patch'" {
   export INPUT_DEFAULT_BUMP="patch"
   export GITHUB_TOKEN="dummy"
