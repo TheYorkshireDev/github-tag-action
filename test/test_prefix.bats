@@ -31,7 +31,7 @@ run_entry() {
 
 @test "Bumps a tag with default settings (no prefix)" {
   run setup
-  git tag "1.0.0" >/dev/null
+  git tag "1.0.0"
   export DRY_RUN="true"
   run run_entry
   assert_success
@@ -39,7 +39,7 @@ run_entry() {
   run teardown
 }
 
-@test "Creates a new tag with v prefix" {
+@test "Creates a new tag with 'v' prefix" {
   run setup
   export DRY_RUN="true"
   export TAG_PREFIX="v"
@@ -49,9 +49,9 @@ run_entry() {
   run teardown
 }
 
-@test "Bumps a new tag with v prefix" {
+@test "Bumps a new tag with 'v' prefix" {
   run setup
-  git tag "v1.0.0" >/dev/null
+  git tag "v1.0.0"
   export DRY_RUN="true"
   export TAG_PREFIX="v"
   run run_entry
