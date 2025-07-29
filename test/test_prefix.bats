@@ -10,6 +10,8 @@ setup() {
   git config user.name "Test"
   git config user.email "test@example.com"
   touch README && git add README && git commit -m "initial" >/dev/null
+
+  SOURCE="../../../../..$(pwd)" # Workaround for "GITHUB_WORKSPACE" prefix in script
 }
 
 teardown() {
@@ -22,12 +24,8 @@ run_entry() {
 
 @test "Creates a new tag with default settings (no prefix)" {
   # Arrange
-  run setup
-  export SOURCE="../../../../..$(pwd)" # Workaround for "GITHUB_WORKSPACE" prefix in script
+  export SOURCE="$SOURCE"
   export DRY_RUN="true"
-  pwd
-  git status
-  ls -al
 
   # Act
   run run_entry
@@ -35,7 +33,6 @@ run_entry() {
   # Assert
   assert_success
   assert_line "Bumping tag 0.0.0 - New tag 0.1.0"
-  run teardown
 }
 
 
