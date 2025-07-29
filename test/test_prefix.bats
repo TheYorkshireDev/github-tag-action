@@ -4,13 +4,6 @@ bats_load_library bats-support
 bats_load_library bats-assert
 
 setup() {
-  # get the containing directory of this file
-  # use $BATS_TEST_FILENAME instead of ${BASH_SOURCE[0]} or $0,
-  # as those will point to the bats executable's location or the preprocessed file respectively
-  DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )"
-  # make executables in root visible to PATH
-  export PATH="$DIR/../:$PATH"
-
   TMP=$(mktemp -d)
   cd "$TMP"
   git init -b main >/dev/null
@@ -23,6 +16,10 @@ teardown() {
   rm -rf "$TMP"
 }
 
+run_entry() {
+  bash "$BATS_TEST_DIRNAME/../entrypoint.sh"
+}
+
 @test "Creates a new tag with default settings (no prefix)" {
   # Arrange
   run setup
@@ -33,7 +30,7 @@ teardown() {
   ls -al
 
   # Act
-  bash entrypoint.sh
+  run run_entry
 
   # Assert
   assert_success
