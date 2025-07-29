@@ -68,7 +68,7 @@ run_entry() {
   export SOURCE="$SOURCE"
   export DRY_RUN="true"
   export TAG_PREFIX="v"
-  git tag "1.0.0" && git commit -m "bump" --allow-empty >/dev/null
+  git tag "v1.0.0" && git commit -m "bump" --allow-empty >/dev/null
 
   # Act
   run run_entry
