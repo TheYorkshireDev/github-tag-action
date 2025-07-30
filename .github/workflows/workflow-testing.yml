@@ -26,7 +26,7 @@ jobs:
 
       - name: Passing
         id: pass
-        uses: TheYorkshireDev/github-tag-action@bugfix/allow-slash-in-prefix
+        uses: TheYorkshireDev/github-tag-action@bugfix/support-forward-slash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRY_RUN: true
