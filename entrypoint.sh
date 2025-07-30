@@ -61,10 +61,6 @@ then
     set -x
 fi
 
-pwd
-ls -al
-git status
-
 setOutput() {
     echo "${1}=${2}" >> "${GITHUB_OUTPUT}"
 }
