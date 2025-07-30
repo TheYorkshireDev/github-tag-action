@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  test-jobs:
+  failing-job:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -17,6 +17,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRY_RUN: true
           TAG_PREFIX: "test/"
+
+  passing-jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Passing
         id: pass
