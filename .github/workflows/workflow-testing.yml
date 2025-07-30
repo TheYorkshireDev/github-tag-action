@@ -1,0 +1,33 @@
+name: Testing Workflow
+
+on:
+  pull_request:
+
+jobs:
+  failing-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Failure
+        id: fail
+        uses: anothrNick/github-tag-action@1.73.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: true
+          TAG_PREFIX: "test/"
+
+  passing-jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Passing
+        id: pass
+        uses: TheYorkshireDev/github-tag-action@bugfix/support-forward-slash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: true
+          TAG_PREFIX: "test/"
