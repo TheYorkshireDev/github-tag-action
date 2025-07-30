@@ -63,7 +63,7 @@ run_entry() {
   assert_line "Bumping tag v0.0.0 - New tag v0.1.0"
 }
 
-@test "Bumps a new tag with 'v' prefix" {
+@test "Bumps a tag with 'v' prefix" {
   # Arrange
   export SOURCE="$SOURCE"
   export DRY_RUN="true"
@@ -90,4 +90,36 @@ run_entry() {
   # Assert
   assert_success
   assert_line "Bumping tag infra/0.0.0 - New tag infra/0.1.0"
+}
+
+@test "Bumps a tag with '/' prefix" {
+  # Arrange
+  export SOURCE="$SOURCE"
+  export DRY_RUN="true"
+  export TAG_PREFIX="infra/"
+  git tag "infra/1.0.0" && git commit -m "bump" --allow-empty >/dev/null
+
+  # Act
+  run run_entry
+
+  # Assert
+  assert_success
+  assert_line "Bumping tag infra/1.0.0 - New tag infra/1.1.0"
+}
+
+@test "Bumps only matching prefix tag" {
+  # Arrange
+  export SOURCE="$SOURCE"
+  export DRY_RUN="true"
+  export TAG_PREFIX="infra/"
+  git tag "2.0.0" && git commit -m "bump-no-prefix-1" --allow-empty >/dev/null
+  git tag "infra/1.7.0" && git commit -m "bump-prefix-1" --allow-empty >/dev/null
+  git tag "2.1.0" && git commit -m "bump-no-prefix-2" --allow-empty >/dev/null
+
+  # Act
+  run run_entry
+
+  # Assert
+  assert_success
+  assert_line "Bumping tag infra/1.7.0 - New tag infra/1.8.0"
 }

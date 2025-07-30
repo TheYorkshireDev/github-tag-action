@@ -266,7 +266,7 @@ then
     # use git api to push
     dt=$(date '+%Y-%m-%dT%H:%M:%SZ')
     full_name=$GITHUB_REPOSITORY
-    git_refs_url=$(jq .repository.git_refs_url "$GITHUB_EVENT_PATH" | tr -d '"' | sed 's;{\/sha};;g')
+    git_refs_url=$(jq .repository.git_refs_url "$GITHUB_EVENT_PATH" | tr -d '"' | sed 's/{\/sha}//g')
 
     echo "$dt: **pushing tag $new to repo $full_name"
 
