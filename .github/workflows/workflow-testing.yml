@@ -19,7 +19,7 @@ jobs:
           TAG_PREFIX: "test/"
 
       - name: Passing
-        id: fail
+        id: pass
         uses: TheYorkshireDev/github-tag-action@bugfix/allow-slash-in-prefix
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
