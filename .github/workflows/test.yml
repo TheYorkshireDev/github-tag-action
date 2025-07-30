@@ -229,4 +229,4 @@ jobs:
           BATS_LIB_PATH: ${{ steps.setup-bats.outputs.lib-path }}
         run: |
           echo "Prefix Tests:"
-          bats --verbose-run test/test_prefix.bats 
+          bats --verbose-run --show-output-of-passing-tests test/test_prefix.bats 

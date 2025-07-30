@@ -122,4 +122,5 @@ run_entry() {
   # Assert
   assert_success
   assert_line "Bumping tag infra/1.7.0 - New tag infra/1.8.0"
+  refute_line "Bumping tag 2.1.0 - New tag 2.2.0"
 }
